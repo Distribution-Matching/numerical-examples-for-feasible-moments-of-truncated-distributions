@@ -6,7 +6,7 @@ I = [0,1]. Along the ray -μ/σ² = λ in the parent parameters of the normal,
 the truncation to [0,1] is ∝ exp(-λx - x²/(2σ²)), and as σ → ∞ it tends to
 the truncated exponential with rate λ.
 (a) Schematic of the rays μ = -λσ² in the parent parameters, for
-    λ = -2, 2, 3, as arrows in the direction of increasing σ; legend here.
+    λ = -2, 0.5, 3, as arrows in the direction of increasing σ; legend here.
 (b) The (mean, sd) trajectories along these rays, each ending at its point
     of Γ_I. Markers of the same shape in both panels are at
     the same σ².
@@ -17,7 +17,7 @@ gr()
 
 const BLUE = RGB(0.16, 0.24, 0.55)
 const COLS = (RGB(0.90, 0.50, 0.05), RGB(0.10, 0.55, 0.20), RGB(0.70, 0.10, 0.45))
-const LAMS = (-2.0, 2.0, 3.0)                     # rays in panel (b)
+const LAMS = (-2.0, 0.5, 3.0)                     # rays in panel (b)
 const S2 = (0.1, 0.5, 1.5)                        # σ² values marked in both panels
 const SHAPES = (:circle, :square, :utriangle)
 const FONT = (fontfamily = "Computer Modern", titlefontsize = 10, guidefontsize = 10,
@@ -39,7 +39,7 @@ pa = plot(; xlims = (-7, 5), ylims = (0, 2.1), framestyle = :axes, grid = false,
 plot!(pa, [0, 0], [0, 2.1]; color = :gray70, lw = 0.8, label = "")
 annotate!(pa, 0.25, 2.0, text(L"\mu=0", 8, :left, :gray40, "Computer Modern"))
 for (λ, col) in zip(LAMS, COLS)
-    plot!(pa, [0, -2λ], [0, 2]; color = col, lw = 1.6, label = L"\lambda=%$(Int(λ))",
+    plot!(pa, [0, -2λ], [0, 2]; color = col, lw = 1.6, label = L"\lambda=%$(isinteger(λ) ? Int(λ) : λ)",
           arrow = arrow(:closed, :head, 0.4, 0.3))
     scatter!(pa, [-λ * s for s in S2], collect(S2); color = col, label = "",
              markershape = collect(SHAPES), markersize = 3.5, markerstrokewidth = 0)
