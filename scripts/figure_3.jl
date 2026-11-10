@@ -6,9 +6,9 @@ I = [0,1]. Along the ray -μ/σ² = λ in the parent parameters of the normal,
 the truncation to [0,1] is ∝ exp(-λx - x²/(2σ²)), and as σ → ∞ it tends to
 the truncated exponential with rate λ.
 (a) Schematic of the rays μ = -λσ² in the parent parameters, for
-    λ = -2, 3, 8, as arrows in the direction of increasing σ; legend here.
+    λ = -2, 2, 3, as arrows in the direction of increasing σ; legend here.
 (b) The (mean, sd) trajectories along these rays, each ending at its point
-    of Γ_I (open circle). Markers of the same shape in both panels are at
+    of Γ_I. Markers of the same shape in both panels are at
     the same σ².
 =#
 
@@ -17,7 +17,7 @@ gr()
 
 const BLUE = RGB(0.16, 0.24, 0.55)
 const COLS = (RGB(0.90, 0.50, 0.05), RGB(0.10, 0.55, 0.20), RGB(0.70, 0.10, 0.45))
-const LAMS = (-2.0, 3.0, 8.0)                     # rays in panel (b)
+const LAMS = (-2.0, 2.0, 3.0)                     # rays in panel (b)
 const S2 = (0.1, 0.5, 1.5)                        # σ² values marked in both panels
 const SHAPES = (:circle, :square, :utriangle)
 const FONT = (fontfamily = "Computer Modern", titlefontsize = 10, guidefontsize = 10,
@@ -32,7 +32,7 @@ function moments(λ, σ2)
 end
 # (a) schematic of the rays in the parent parameters, drawn as arrows in the
 # direction of increasing σ; the legend for both panels is here.
-pa = plot(; xlims = (-17, 5), ylims = (0, 2.1), framestyle = :axes, grid = false,
+pa = plot(; xlims = (-7, 5), ylims = (0, 2.1), framestyle = :axes, grid = false,
           xticks = false, yticks = false, legend = :bottomleft,
           background_color_legend = :white, foreground_color_legend = :gray70,
           xlabel = L"\mu", ylabel = L"\sigma^2", title = "(a)", FONT...)
@@ -54,14 +54,13 @@ pb = plot(first.(gam), last.(gam); color = BLUE, lw = 2.2, label = "",
           xlabel = L"\bar\mu", ylabel = L"\bar\sigma", title = "(b)", gridalpha = 0.08,
           background_color_legend = :white, foreground_color_legend = :gray70, FONT...)
 for (λ, col) in zip(LAMS, COLS)
-    traj = [moments(λ, s) for s in exp10.(range(-3, 4; length = 400))]
+    # As σ → 0 the truncation concentrates at 0, so each trajectory starts at
+    # the origin.
+    traj = vcat([(0.0, 0.0)], [moments(λ, s) for s in exp10.(range(-5, 4; length = 500))])
     plot!(pb, first.(traj), last.(traj); color = col, lw = 1.6, label = "")
     mk = [moments(λ, s) for s in S2]
     scatter!(pb, first.(mk), last.(mk); color = col, markershape = collect(SHAPES),
              markersize = 3.5, markerstrokewidth = 0, label = "")
-    m∞, s∞ = moments(λ, Inf)
-    scatter!(pb, [m∞], [s∞]; color = :white, markerstrokecolor = col,
-             markerstrokewidth = 1.5, markersize = 4.5, label = "")
 end
 fig = plot(pa, pb; layout = (1, 2), size = (620, 240), left_margin = 5Plots.mm,
            bottom_margin = 3Plots.mm)
