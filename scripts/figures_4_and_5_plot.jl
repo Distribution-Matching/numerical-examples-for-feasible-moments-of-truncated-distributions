@@ -104,17 +104,18 @@ for n in NS
 end
 
 # Two parallel vertical colour scales, purple then red, ticks on the right.
-vbar(cmap, ticks) = heatmap([0, 1], range(0, EMAX; length = 256),
+vbar(cmap, ticks; right = true) = heatmap([0, 1], range(0, EMAX; length = 256),
                             repeat(collect(range(0, EMAX; length = 256)), 1, 2);
                             c = cmap, clims = (0, EMAX), colorbar = false,
                             xticks = false, yticks = ticks ? (0:0.25:1) : false,
                             xlims = (-0.5, 1.5), ylims = (0, EMAX),
-                            ymirror = true, framestyle = :box,
+                            ymirror = right, framestyle = :box,
                             fontfamily = "Computer Modern", tickfontsize = 8,
                             left_margin = 0Plots.mm, right_margin = 0Plots.mm)
 blank() = plot(; framestyle = :none, grid = false, ticks = false, legend = false)
 # The green level-1/2 curve of the panels is marked on the purple scale.
-pbar = vbar(PURPLE, false)
+pbar = vbar(PURPLE, false; right = false)
+plot!(pbar; yticks = ([0, 0.5, 1], ["0", "0.5", "1"]))   # the 1/2 level is labelled
 plot!(pbar, [-0.5, 1.5], [0.5, 0.5]; color = GREEN, lw = 3.5, legend = false)
 scales = plot(blank(), pbar, vbar(RED, true), blank();
               layout = @layout([a{0.12h}; [b c]; d{0.12h}]))

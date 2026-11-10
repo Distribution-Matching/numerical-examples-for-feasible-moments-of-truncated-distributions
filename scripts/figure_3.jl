@@ -39,7 +39,7 @@ pa = plot(; xlims = (-7, 5), ylims = (0, 2.1), framestyle = :axes, grid = false,
 plot!(pa, [0, 0], [0, 2.1]; color = :gray70, lw = 0.8, label = "")
 annotate!(pa, 0.25, 2.0, text(L"\mu=0", 8, :left, :gray40, "Computer Modern"))
 for (λ, col) in zip(LAMS, COLS)
-    plot!(pa, [0, -2λ], [0, 2]; color = col, lw = 1.6, label = L"\lambda=%$(isinteger(λ) ? Int(λ) : λ)",
+    plot!(pa, [0, -2λ], [0, 2]; color = col, lw = 1.6, label = L"\lambda={%$(isinteger(λ) ? Int(λ) : λ)}",
           arrow = arrow(:closed, :head, 0.4, 0.3))
     scatter!(pa, [-λ * s for s in S2], collect(S2); color = col, label = "",
              markershape = collect(SHAPES), markersize = 3.5, markerstrokewidth = 0)

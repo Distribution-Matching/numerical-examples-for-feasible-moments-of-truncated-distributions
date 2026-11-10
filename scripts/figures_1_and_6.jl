@@ -40,10 +40,13 @@ tarch(ν) = arch(λ -> (x -> (1 + λ * x / (ν + 1))^(-(ν + 1))))
 # Figure 1.
 mg, sg = exparch()
 p1 = plot(mg, sg; fillrange = 0, fillcolor = :gray85, linecolor = BLUE, lw = 2.2,
-          xlims = (-0.01, 1.01), ylims = (0, 0.34), framestyle = :box, legend = false,
+          xlims = (-0.01, 1.01), ylims = (0, 0.52), framestyle = :box, legend = false,
           xlabel = L"\bar\mu", ylabel = L"\bar\sigma", title = "(a)", gridalpha = 0.08,
           FONT...)
 scatter!(p1, [0.5], [1 / sqrt(12)]; color = :black, markersize = 4, markerstrokewidth = 0)
+# The Bhatia-Davis bound sd = sqrt(m(1-m)), valid for every distribution on [0,1].
+mb = range(0, 1; length = 401)
+plot!(p1, mb, sqrt.(mb .* (1 .- mb)); color = :gray45, lw = 1.0)
 # The grey cone ends before the arrowhead.
 p2 = plot([0, 9.5, 9.5, 0], [0, 9.5, 0, 0]; seriestype = :shape, fillcolor = :gray85,
           linecolor = :gray85, xlims = (0, 10.5), ylims = (0, 10.5), legend = false,
@@ -63,19 +66,19 @@ q1 = plot(; xlims = (-0.01, 1.01), ylims = (0, 0.32), framestyle = :box,
           xlabel = L"\bar\mu", ylabel = L"\bar\sigma", title = "(a)",
           legend = :bottom, background_color_legend = :white,
           foreground_color_legend = :gray70, gridalpha = 0.08, FONT...)
+plot!(q1, mg, sg; fillrange = 0, fillcolor = :gray85, fillalpha = 0.8, linecolor = BLUE,
+      lw = 2.2, label = "Log-concave")
 for (ν, col, ls) in styles
     m, s = tarch(ν)
     plot!(q1, m, s; color = col, ls = ls, lw = 1.8, label = "Student-\$t_{$ν}\$")
 end
-plot!(q1, mg, sg; fillrange = 0, fillcolor = :gray85, fillalpha = 0.8, linecolor = BLUE,
-      lw = 2.2, label = "Log-concave (Langevin)")
 q2 = plot(; xlims = (0, 10), ylims = (0, 10), framestyle = :box,
           xlabel = L"\bar\mu", ylabel = L"\bar\sigma", title = "(b)",
           legend = :bottomright, background_color_legend = :white,
           foreground_color_legend = :gray70, gridalpha = 0.08, FONT...)
 plot!(q2, [0, 10], [0, 10]; color = BLUE, lw = 2.2,
       label = "Log-concave: \$\\bar\\sigma\\leq\\bar\\mu\$")
-for (ν, col, ls) in reverse(styles)
+for (ν, col, ls) in styles
     c = sqrt(ν / (ν - 2))
     r = ν == 3 ? "3" : "$ν/$(ν-2)"
     lab = L"t_{%$ν}\!:\ \bar\sigma\leq\sqrt{%$r}\,\bar\mu"
