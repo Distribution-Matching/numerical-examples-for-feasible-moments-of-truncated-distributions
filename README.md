@@ -1,8 +1,7 @@
 # Numerical examples for feasible moments of truncated distributions
 
 Julia scripts that reproduce the figures of the paper
-*Feasible moments of singly or doubly truncated Gaussians and other
-log-concave distributions* (Moka & Nazarathy).
+*Feasible means and variances of truncated log-concave distributions* (Moka & Nazarathy).
 
 The generated figures are included in [`figures/`](figures), and the
 simulation output behind Figures 4 and 5 in [`data/`](data).
