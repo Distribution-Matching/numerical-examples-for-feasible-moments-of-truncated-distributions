@@ -1,11 +1,32 @@
-# I = [0,1]: density | sigma^2/v_I(mu) | rejection rate for n = 20, 50, 100, 500 | CLT prediction for the same n   (R = 100000, alpha = 0.05)
-truncated exponential, mean 0.05   1.000  0.032  0.045  0.049  0.054  |  0.050  0.050  0.050  0.050
-truncated exponential, mean 0.25   1.000  0.048  0.049  0.048  0.049  |  0.050  0.050  0.050  0.050
-truncated exponential, mean 0.5    1.000  0.045  0.047  0.047  0.049  |  0.050  0.050  0.050  0.050
-truncated normal N(-2,1)           0.966  0.034  0.028  0.022  0.009  |  0.034  0.028  0.023  0.008
-Beta(2,2)                          0.600  0.000  0.000  0.000  0.000  |  0.000  0.000  0.000  0.000
-Beta(0.5,0.5)                      1.500  0.734  0.971  1.000  1.000  |  0.765  0.974  1.000  1.000
-Beta(0.8,0.8)                      1.154  0.182  0.320  0.509  0.979  |  0.208  0.345  0.528  0.980
-Beta(0.5,1.5)                      1.292  0.264  0.494  0.750  1.000  |  0.305  0.531  0.771  1.000
-mixture B(3,12),B(12,3)            1.200  0.156  0.430  0.769  1.000  |  0.190  0.465  0.790  1.000
-mixture B(5,15),B(15,5)            0.857  0.000  0.000  0.000  0.000  |  0.000  0.000  0.000  0.000
+# I = [0,1], alpha = 0.05: density | method | rejection rate for n = 20, 50, 100, 500   (table RQ = 40000 per grid point, RC = 100000)
+truncated exponential, mean 0.05   asymptotic      0.033  0.045  0.049  0.055
+truncated exponential, mean 0.05   bias-corrected  0.052  0.058  0.059  0.059
+truncated exponential, mean 0.05   tabulated       0.050  0.050  0.049  0.052
+truncated exponential, mean 0.25   asymptotic      0.046  0.047  0.048  0.050
+truncated exponential, mean 0.25   bias-corrected  0.065  0.058  0.055  0.053
+truncated exponential, mean 0.25   tabulated       0.050  0.049  0.049  0.051
+truncated exponential, mean 0.5    asymptotic      0.046  0.047  0.048  0.049
+truncated exponential, mean 0.5    bias-corrected  0.059  0.055  0.053  0.051
+truncated exponential, mean 0.5    tabulated       0.050  0.050  0.050  0.050
+truncated normal N(-2,1)           asymptotic      0.032  0.029  0.022  0.008
+truncated normal N(-2,1)           bias-corrected  0.045  0.035  0.025  0.008
+truncated normal N(-2,1)           tabulated       0.036  0.031  0.023  0.008
+Beta(2,2)                          asymptotic      0.000  0.000  0.000  0.000
+Beta(2,2)                          bias-corrected  0.000  0.000  0.000  0.000
+Beta(2,2)                          tabulated       0.000  0.000  0.000  0.000
+Beta(0.5,0.5)                      asymptotic      0.730  0.970  1.000  1.000
+Beta(0.5,0.5)                      bias-corrected  0.766  0.974  1.000  1.000
+Beta(0.5,0.5)                      tabulated       0.745  0.972  1.000  1.000
+Beta(0.8,0.8)                      asymptotic      0.182  0.322  0.506  0.979
+Beta(0.8,0.8)                      bias-corrected  0.216  0.348  0.525  0.980
+Beta(0.8,0.8)                      tabulated       0.195  0.333  0.518  0.979
+Beta(0.5,1.5)                      asymptotic      0.263  0.493  0.750  1.000
+Beta(0.5,1.5)                      bias-corrected  0.318  0.533  0.770  1.000
+Beta(0.5,1.5)                      tabulated       0.273  0.502  0.755  1.000
+mixture B(3,12),B(12,3)            asymptotic      0.158  0.430  0.766  1.000
+mixture B(3,12),B(12,3)            bias-corrected  0.205  0.470  0.787  1.000
+mixture B(3,12),B(12,3)            tabulated       0.176  0.447  0.779  1.000
+mixture B(5,15),B(15,5)            asymptotic      0.000  0.000  0.000  0.000
+mixture B(5,15),B(15,5)            bias-corrected  0.000  0.000  0.000  0.000
+mixture B(5,15),B(15,5)            tabulated       0.000  0.000  0.000  0.000
+# q_n(mu) at mu = 0.05, 0.25, 0.5: n=20: 1.315 1.614 1.619; n=50: 1.547 1.616 1.611; n=100: 1.647 1.626 1.616; n=500: 1.678 1.641 1.636
