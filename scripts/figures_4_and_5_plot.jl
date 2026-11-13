@@ -9,7 +9,7 @@ P(below) for true points above Γ_I (purple) and P(above) for true points
 below it (red), with the two colour scales side by side on the right. The
 green curve is the level 1/2 of P(below).
 figures/figure_5.pdf (Figure 5), I = [0,∞): for truncated normal data, the
-probability that s ≥ m, so that the maximum likelihood estimator does not
+probability that S_n ≥ X̄_n, so that the maximum likelihood estimator does not
 exist, against the coefficient of variation σ̄/μ̄, for the same n.
 =#
 
@@ -132,7 +132,7 @@ const HCOLS = (RGB(0.97, 0.58, 0.48), RGB(0.88, 0.38, 0.30), RGB(0.74, 0.16, 0.1
 rows = [split(l) for l in eachline(joinpath(DIR, "mle_regime_half.dat"))][2:end]
 cs = parse.(Float64, first.(rows))
 hp = plot(; xlims = (0.5, 1), ylims = (0, 0.45), xticks = 0.5:0.1:1, framestyle = :box, gridalpha = 0.08,
-          xlabel = L"\bar\sigma/\bar\mu", ylabel = "Probability that " * L"s\geq m",
+          xlabel = L"\bar\sigma/\bar\mu", ylabel = "Probability that " * L"S_n\geq\bar X_n",
           legend = :topleft, fontfamily = "Computer Modern", guidefontsize = 10,
           tickfontsize = 8, legendfontsize = 8, background_color_legend = :white,
           foreground_color_legend = :gray70, size = (460, 230),
