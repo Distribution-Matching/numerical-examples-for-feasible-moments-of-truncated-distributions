@@ -51,7 +51,7 @@ end
 
 function panel(q, title)
     p = plot(; fontfamily = "Computer Modern", framestyle = :box, xlims = (0, 1),
-             ylims = (0, 5), xlabel = L"x", ylabel = "density", title = title,
+             ylims = (0, 3.5), xlabel = L"x", ylabel = "density", title = title,
              titlefontsize = 10, guidefontsize = 10, tickfontsize = 8,
              legendfontsize = 7, legend = :topright, foreground_color_legend = :gray70,
              background_color_legend = :white, gridalpha = 0.08)

@@ -1,11 +1,11 @@
 # Numerical examples for feasible moments of truncated distributions
 
-Julia and R scripts that reproduce the figures, the table and the
-numerical results of the paper
+Julia and R scripts that reproduce the figures, tables and numerical
+statements of the paper
 *Feasible means and variances of truncated log-concave distributions* (Moka & Nazarathy).
 
 The generated figures are included in [`figures/`](figures), and the
-simulation output behind Figures 4 and 5, Table 1 and Section 6 in [`data/`](data).
+simulation output behind Figure 4 and the tables in [`data/`](data).
 
 ## Companion artefacts
 
@@ -18,17 +18,18 @@ simulation output behind Figures 4 and 5, Table 1 and Section 6 in [`data/`](dat
 ## Layout
 
 ```
-scripts/figures_1_and_6.jl           # Figure 1: feasible region for I = [0,1] and [0,∞)
-                                     # Figure 6: conjectured Student-t boundaries
+scripts/figures_1_and_5.jl           # Figure 1: feasible region for I = [0,1] and [0,∞)
+                                     # Figure 5: conjectured Student-t boundaries
 scripts/figure_2.jl                  # Figure 2: normal, logistic and Laplace truncations
                                      #   matched to a mean and standard deviation with
                                      #   DistributionsFactories.make_dist; also prints
                                      #   the parent parameters quoted in the paper
-scripts/figure_3.jl                  # Figure 3: Gaussian rays μ = -λσ² and their approach
-                                     #   to the boundary (Proposition 2)
-scripts/figures_4_and_5_simulate.jl  # Figures 4 and 5: Monte Carlo study of the maximum
-                                     #   likelihood regime (writes data/)
-scripts/figures_4_and_5_plot.jl      # Figures 4 and 5: plots from data/
+scripts/figure_3.jl                  # Figure 3: Gaussian rays μ = -λσ², their approach
+                                     #   to the boundary (Proposition 2), and the inner
+                                     #   boundary (Proposition 3), for I = [0,1] and [0,∞)
+scripts/figure_4_simulate.jl         # Figure 4: Monte Carlo study of the maximum
+                                     #   likelihood regime (writes data/mle_regime_*.dat)
+scripts/figure_4_plot.jl             # Figure 4 (a) and (b): plots from data/
 scripts/table_1.jl                   # Table 1: rejection rates of the diagnostic test of
                                      #   Section 6 for I = [0,1], asymptotic and with
                                      #   tabulated null quantiles (also the bias-corrected
@@ -37,15 +38,21 @@ scripts/table_1.jl                   # Table 1: rejection rates of the diagnosti
 scripts/table_1_core.jl              # shared functions (v_I, omega, truncated exponential
                                      #   sampler); run alone, the asymptotic test with the
                                      #   first-order CLT predictions (data/table_1_clt.dat)
-scripts/run_all.jl                   # all of the above
+scripts/section_5_variance_peaks.jl  # Section 5: variance overshoot along rays with λ < 0
+scripts/section_5_inner_boundary.jl  # Sections 5-7: inner boundary values, Swiss data
+                                     #   against the inner boundary, and the coefficient
+                                     #   of variation r(β) for other parents (Section 7)
+scripts/section_6_halfline_size.jl   # Section 6: size of the test at the exponential
+                                     #   on [0,∞) for larger n
+scripts/section_7_ifr_ceiling.jl     # Section 7: variance ceiling for increasing failure rate
+scripts/run_all.jl                   # all figures, Table 1 and the Section 5 and 7 numbers
 R/power_comparison.R                 # Section 6: comparison with the universal inference
                                      #   test of Dunn et al. (2,000 replications; about
                                      #   25 minutes; writes data/power_comparison.dat)
-R/swiss_example.R                    # Section 6: data example on the R dataset `swiss`
-                                     #   (writes data/swiss_example.dat)
-figures/figure_N.pdf                 # the figures
-data/                                # simulation output for Figures 4 and 5, Table 1 and
-                                     #   Section 6
+R/swiss_example.R                    # Section 6: data example on the R dataset `swiss`,
+                                     #   Table 2 (writes data/swiss_example.dat)
+figures/figure_N.pdf                 # the figures (figure_4a.pdf, figure_4b.pdf for Figure 4)
+data/                                # simulation output for Figure 4, Table 1 and Section 6
 ```
 
 ## Running
@@ -57,8 +64,15 @@ julia --project=. -e 'using Pkg; Pkg.instantiate()'
 julia -t auto --project=. scripts/run_all.jl
 ```
 
-The simulation for Figures 4 and 5 takes about 3 minutes with 8 threads,
-Table 1 several minutes, and the other figures seconds.
+The simulation for Figure 4 takes about 3 minutes with 8 threads, Table 1
+several minutes, and the other scripts seconds. Each script can also be run
+on its own, for example `julia --project=. scripts/figure_2.jl`. The
+plotting script for Figure 4 reads the data written by the simulation
+script. The half-line size check is a longer separate run:
+
+```bash
+julia --project=. scripts/section_6_halfline_size.jl
+```
 
 The two R scripts need R 4 or later and the package
 [`logcondens`](https://CRAN.R-project.org/package=logcondens):
@@ -67,6 +81,4 @@ The two R scripts need R 4 or later and the package
 Rscript -e 'install.packages("logcondens")'
 Rscript R/swiss_example.R
 Rscript R/power_comparison.R
-``` Each script can also be run on its own,
-for example `julia --project=. scripts/figure_2.jl`. The plotting script
-for Figures 4 and 5 reads the data written by the simulation script.
+```

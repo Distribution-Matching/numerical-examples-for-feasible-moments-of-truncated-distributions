@@ -1,6 +1,6 @@
 # power_comparison.R
 #
-# Compares, on I = [0,1], the diagnostic test (14) of Section 6 with the
+# Compares, on I = [0,1], the diagnostic test (15) of Section 6 with the
 # universal-inference split likelihood-ratio test for log-concavity of Dunn,
 # Gangrade, Wasserman and Ramdas (JCGS, 2025), which is valid in finite
 # samples. For the latter, the sample is split at random into halves D0 and
@@ -36,7 +36,7 @@ Lder <- function(z) {
   c(c - 1/z, 1/z^2 - q, -2/z^3 + 2*q*c, 6/z^4 - 4*q*c^2 - 2*q^2)
 }
 Linv <- function(y) uniroot(function(z) Lder(z)[1] - y, c(-1e4, 1e4), tol = 1e-13)$root
-# v_I(m) and omega(m)^2 = v_I^2 (2 + v_I'') on [0,1] (Remark 4).
+# v_I(m) and omega(m)^2 = v_I^2 (2 + v_I'') on [0,1] (Remark 5).
 vI_omega2 <- function(m) {
   d <- Lder(Linv(1 - 2*m))
   c(d[2]/4, (d[4] + 2*d[2]^2 - d[3]^2/d[2])/16)

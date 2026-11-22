@@ -4,7 +4,7 @@ table_1.jl
 Finite-sample calibration of the diagnostic test of Section 6 for I = [0,1].
 With T_n = sqrt(n) G_n / ω(X̄_n), three versions of the test at α = 0.05:
 
-  asymptotic       reject when T_n > Φ⁻¹(1-α), the test (14);
+  asymptotic       reject when T_n > Φ⁻¹(1-α), the test (15);
   bias-corrected   G_n is replaced by G_n + S_n² ω(X̄_n)² / (2 n v_I(X̄_n)²),
                    which removes the leading bias -σ̄²(1 + v_I''/2)/n, since
                    1 + v_I''/2 = ω²/(2 v_I²) on Γ_I;

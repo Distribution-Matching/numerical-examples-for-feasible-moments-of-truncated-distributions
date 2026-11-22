@@ -1,8 +1,8 @@
 #=
-figures_4_and_5_simulate.jl
+figure_4_simulate.jl
 
-Generates the data for Figures 4 and 5 (about 3 minutes with 8 threads;
-run as `julia -t auto --project=. scripts/figures_4_and_5_simulate.jl`).
+Generates the data for Figure 4 (about 3 minutes with 8 threads;
+run as `julia -t auto --project=. scripts/figure_4_simulate.jl`).
 
 For I = [0,1], every point (m, σ̄) with 0 < σ̄² < m(1-m) is the mean and
 standard deviation of a unique density f_θ(x) ∝ exp(θ₁x + θ₂x²) on [0,1]

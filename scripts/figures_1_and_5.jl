@@ -1,7 +1,7 @@
 #=
-figures_1_and_6.jl
+figures_1_and_5.jl
 
-Draws Figure 1 (figures/figure_1.pdf) and Figure 6 (figures/figure_6.pdf).
+Draws Figure 1 (figures/figure_1.pdf) and Figure 5 (figures/figure_5.pdf).
 
 The boundary Γ_I^sd for I = [0,1] is traced by the truncated exponential
 ∝ exp(-λx) on [0,1] as λ ranges over ℝ. The conjectured Student-t_ν domes
@@ -58,7 +58,7 @@ fig1 = plot(p1, p2; layout = (1, 2), size = (620, 240), left_margin = 2Plots.mm,
             bottom_margin = 3Plots.mm)
 savefig(fig1, joinpath(OUT, "figure_1.pdf"))
 
-# Figure 4.
+# Figure 5.
 # Solid lines in distinct colours (orange, red, purple) for nu = 3, 5, 10.
 styles = ((3, RGB(0.90, 0.50, 0.05), :solid), (5, RGB(0.80, 0.10, 0.15), :solid),
           (10, RGB(0.50, 0.20, 0.65), :solid))
@@ -80,11 +80,12 @@ plot!(q2, [0, 10], [0, 10]; color = BLUE, lw = 2.2,
       label = "Log-concave: \$\\bar\\sigma\\leq\\bar\\mu\$")
 for (ν, col, ls) in styles
     c = sqrt(ν / (ν - 2))
-    r = ν == 3 ? "3" : "$ν/$(ν-2)"
+    q = ν // (ν - 2)                          # reduced, e.g. 10/8 = 5/4
+    r = denominator(q) == 1 ? "$(numerator(q))" : "$(numerator(q))/$(denominator(q))"
     lab = L"t_{%$ν}\!:\ \bar\sigma\leq\sqrt{%$r}\,\bar\mu"
     plot!(q2, [0, 10], [0, 10c]; color = col, ls = ls, lw = 1.8, label = lab)
 end
 fig4 = plot(q1, q2; layout = (1, 2), size = (620, 250), left_margin = 2Plots.mm,
             bottom_margin = 3Plots.mm)
-savefig(fig4, joinpath(OUT, "figure_6.pdf"))
-println("wrote figures/figure_1.pdf and figures/figure_6.pdf")
+savefig(fig4, joinpath(OUT, "figure_5.pdf"))
+println("wrote figures/figure_1.pdf and figures/figure_5.pdf")

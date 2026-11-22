@@ -8,7 +8,7 @@ cor:boundary-test): reject H_0 (f log-concave on I) when
 
 equivalently sqrt(n) G_n > Φ⁻¹(1-α) ω(X̄_n) with G_n = S_n^2 - v_I(X̄_n) and
 ω(m)² = v_I(m)²(2 + v_I''(m)), computed for I = [0,1] through the Langevin
-function as ω² = (L''' + 2L'² - L''²/L')/16 at z = L⁻¹(1-2m) (Remark 4).
+function as ω² = (L''' + 2L'² - L''²/L')/16 at z = L⁻¹(1-2m) (Remark 5).
 Here X̄_n and S_n^2 are the sample mean and variance with divisor n.
 
 Each cell uses R = 100,000 replications at α = 0.05, for I = [0,1] (the
@@ -19,7 +19,7 @@ first-order CLT prediction of the rejection probability,
 
     1 - Φ( (Φ⁻¹(1-α) ω_ξ - sqrt(n) (σ̄² - v_I(μ̄))) / ω_f ),
 
-with ω_f² = Var((X-μ̄)² - v_I'(μ̄) X) and ω_ξ = ω(μ̄) (Proposition 3).
+with ω_f² = Var((X-μ̄)² - v_I'(μ̄) X) and ω_ξ = ω(μ̄) (Proposition 4).
 Included by table_1.jl. Run on its own, it prints the rates of the asymptotic
 test with the CLT predictions and writes data/table_1_clt.dat.
 =#

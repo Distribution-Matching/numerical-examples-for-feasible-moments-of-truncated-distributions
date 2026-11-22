@@ -6,7 +6,7 @@
 # proportions on I = [0,1]. For each, the script reports the sample mean and
 # variance (divisor n), the ratio S_n^2 / v_I(X̄_n), the statistic
 # T_n = sqrt(n) G_n / omega(X̄_n), the asymptotic p-value 1 - Phi(T_n) of the
-# test (14), a parametric-bootstrap p-value from 100,000 samples of size n
+# test (15), a parametric-bootstrap p-value from 100,000 samples of size n
 # from the truncated exponential with mean X̄_n, and the e-value (average
 # likelihood ratio over 100 random splits) of the universal split LRT of
 # Dunn et al., which rejects at level 0.05 when it is at least 20.
