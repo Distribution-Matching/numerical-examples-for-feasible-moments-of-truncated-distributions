@@ -10,8 +10,9 @@ as σ → ∞ it tends to the truncated exponential with rate λ.
 (b) I = [0,1]: the (mean, sd) trajectories along these rays, each ending at
     its point of Γ_I, with the inner boundary Γ_I^in (dashed; the μ = 0
     trajectory and its mirror image) and the inner region shaded.
-(c) I = [0,∞): the trajectories along the rays λ = 0.5 and 3, ending on the
-    line sd = mean, with the inner boundary sd = sqrt(π/2-1) mean (dashed).
+(c) I = [0,∞): the trajectories along the rays λ = 0.5 (outer, ending on
+    the line sd = mean) and λ = -2 (inner, moving away from it), with the
+    inner boundary sd = sqrt(π/2-1) mean (dashed).
 Layout: (a) and (b) side by side, (c) centred below them. Dashed lines mark
 the borders between inner and outer truncations in every panel.
 Markers of the same shape in all panels are at the same σ².
@@ -78,28 +79,30 @@ for (λ, col) in zip(LAMS, COLS)
     scatter!(pb, first.(mk), last.(mk); color = col, markershape = collect(SHAPES),
              markersize = 3.5, markerstrokewidth = 0, label = "")
 end
-# (c) the half-line [0,∞): rays λ = 0.5 and 3, limiting means 2 and 1/3.
+# (c) the half-line [0,∞): the rays λ = 0.5 (outer, limiting mean 2) and
+# λ = -2 (inner, μ = 2σ² > 0, coefficient of variation decreasing to 0). The
+# ray λ = 3 is a scaled copy of λ = 0.5 and is omitted to keep the panel clear.
 function moments_half(λ, σ2)
-    g = x -> exp(-λ * x - x^2 / (2σ2))
+    c = λ < 0 ? λ^2 * σ2 / 2 : 0.0                 # log-density maximum, against overflow
+    g = x -> exp(-λ * x - x^2 / (2σ2) - c)
     Z = quadgk(g, 0, Inf)[1]
     m = quadgk(x -> x * g(x), 0, Inf)[1] / Z
     return m, sqrt(quadgk(x -> (x - m)^2 * g(x), 0, Inf)[1] / Z)
 end
 const CIN = sqrt(π / 2 - 1)
 # Drawn like Figure 1 (b): the half-line region is an unbounded cone, so no
-# frame or ticks; the shaded inner cone ends before the arrowhead.
-pc = plot([0, 2.2, 2.2, 0], [0, 2.2 * CIN, 0, 0]; seriestype = :shape, fillcolor = :gray88,
-          linecolor = :gray88, xlims = (0, 2.4), ylims = (0, 2.4), legend = false,
+# frame or ticks; the shaded inner cone ends before the right edge.
+pc = plot([0, 3.2, 3.2, 0], [0, 3.2 * CIN, 0, 0]; seriestype = :shape, fillcolor = :gray88,
+          linecolor = :gray88, xlims = (0, 3.4), ylims = (0, 2.55), legend = false,
           framestyle = :axes, grid = false, xticks = false, yticks = false,
           xlabel = L"\bar\mu", ylabel = L"\bar\sigma", title = "(c)",
           right_margin = 15Plots.mm, FONT...)
-plot!(pc, [0, 2.2], [0, 2.2 * CIN]; color = :gray25, lw = 1.2, ls = :dash, label = "")
-plot!(pc, [0, 2.33], [0, 2.33]; color = BLUE, lw = 2.2, label = "",
+plot!(pc, [0, 3.2], [0, 3.2 * CIN]; color = :gray25, lw = 1.2, ls = :dash, label = "")
+plot!(pc, [0, 2.45], [0, 2.45]; color = BLUE, lw = 2.2, label = "",
       arrow = arrow(:closed, :head, 0.4, 0.3))
 annotate!(pc, 1.0, 1.35, text(L"\bar\sigma=\bar\mu", 9, BLUE, :right, "Computer Modern"))
-for (λ, col) in zip(LAMS, COLS)
-    λ > 0 || continue
-    traj = vcat([(0.0, 0.0)], [moments_half(λ, s) for s in exp10.(range(-5, 5; length = 500))])
+for (λ, col, s2max) in ((0.5, COLS[2], 1e5), (-2.0, COLS[1], 1.57))
+    traj = vcat([(0.0, 0.0)], [moments_half(λ, s) for s in exp10.(range(-5, log10(s2max); length = 500))])
     plot!(pc, first.(traj), last.(traj); color = col, lw = 1.6, label = "")
     mk = [moments_half(λ, s) for s in S2]
     scatter!(pc, first.(mk), last.(mk); color = col, markershape = collect(SHAPES),
